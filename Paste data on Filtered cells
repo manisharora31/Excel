@@ -9,7 +9,6 @@ Sub paste_to_filtered_col()
     Set clipboard = New MSForms.DataObject
     clipboard.GetFromClipboard
     ClipArray = Split(clipboard.GetText, vbCrLf)
-    Call PasteFromClipboard3(ClipArray())
     Set destination_cells = ActiveWorkbook.ActiveSheet.Application.Selection
     FirstRow = destination_cells.Cells(1, 1).Row
     LastRow = destination_cells(destination_cells.Count).Row
