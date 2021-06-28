@@ -1,0 +1,25 @@
+Sub paste_to_filtered_col()
+    Dim FirstRow As Long
+    Dim LastRow As Long
+    Dim FirstCol As Long
+    Dim destination_cells As Range
+    Dim clipboard As MSForms.DataObject
+    Dim ClipArray() As String
+
+    Set clipboard = New MSForms.DataObject
+    clipboard.GetFromClipboard
+    ClipArray = Split(clipboard.GetText, vbCrLf)
+    Call PasteFromClipboard3(ClipArray())
+    Set destination_cells = ActiveWorkbook.ActiveSheet.Application.Selection
+    FirstRow = destination_cells.Cells(1, 1).Row
+    LastRow = destination_cells(destination_cells.Count).Row
+    FirstCol = destination_cells.Cells(1, 1).Column
+    num = 0
+    For cell = FirstRow To LastRow
+        If ActiveWorkbook.ActiveSheet.Cells(cell, 1).EntireRow.Hidden = False And num <= UBound(ClipArray) Then
+            ActiveWorkbook.ActiveSheet.Cells(cell, FirstCol) = ClipArray(num)
+            ActiveWorkbook.ActiveSheet.Cells(cell, FirstCol).TextToColumns , xlDelimited, , True, True, False, False, False
+            num = num + 1
+        End If
+    Next cell
+End Sub
